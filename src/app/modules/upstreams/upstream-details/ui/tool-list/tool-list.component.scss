@@ -1,0 +1,13 @@
+.name,
+.original {
+  font-family: var(--got-font-mono);
+}
+
+.description {
+  white-space: pre-line;
+}
+
+h3 {
+  font: var(--mat-sys-title-small);
+  margin: var(--got-space-4) 0 var(--got-space-2);
+}

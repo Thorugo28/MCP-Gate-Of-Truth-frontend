@@ -1,0 +1,13 @@
+.back {
+  margin-bottom: var(--got-space-4);
+}
+
+// Nome de chave é dado técnico: fica em mono mesmo dentro do título.
+.key {
+  font-family: var(--got-font-mono);
+  font-weight: 500;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}

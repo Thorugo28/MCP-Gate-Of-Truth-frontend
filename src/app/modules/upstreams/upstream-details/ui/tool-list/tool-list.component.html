@@ -1,0 +1,20 @@
+<mat-accordion multi>
+  @for (tool of tools(); track tool.name) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="name">{{ tool.name }}</mat-panel-title>
+        <mat-panel-description class="original">{{ tool.originalName }}</mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p class="description">{{ tool.description ?? 'Sem descrição.' }}</p>
+      <h3>inputSchema</h3>
+      <got-json-block [value]="tool.inputSchema" />
+
+      <mat-action-row>
+        <a mat-button [routerLink]="playgroundLink" [queryParams]="{ tool: tool.name }">
+          Abrir no playground
+        </a>
+      </mat-action-row>
+    </mat-expansion-panel>
+  }
+</mat-accordion>

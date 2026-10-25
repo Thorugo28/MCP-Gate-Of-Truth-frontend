@@ -1,0 +1,20 @@
+:host {
+  display: block;
+  border: var(--got-border-line);
+  border-radius: var(--mat-sys-corner-medium);
+  overflow: hidden;
+}
+
+.key {
+  font-family: var(--got-font-mono);
+  font-weight: 500;
+}
+
+.key a {
+  color: var(--got-accent-text);
+  text-decoration: none;
+}
+
+.numeric {
+  text-align: right;
+}

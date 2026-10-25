@@ -1,0 +1,35 @@
+<a mat-button [routerLink]="upstreamsLink" class="back">
+  <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+  Upstreams
+</a>
+
+<h1>
+  Upstream <span class="key">{{ store.key() }}</span>
+</h1>
+
+@if (store.notFound()) {
+  <p>
+    Upstream não encontrado: nenhum upstream com a chave <code>{{ store.key() }}</code
+    >.
+  </p>
+} @else {
+  @if (store.header(); as header) {
+    <got-upstream-header [header]="header" />
+  } @else if (store.isLoadingHeader()) {
+    <got-transmutation-loader label="Consultando o status do upstream…" />
+  } @else if (store.headerError(); as message) {
+    <got-error-state [message]="message" (retry)="store.retryHeader()" />
+  }
+
+  <h2>Tools</h2>
+  @if (store.isLoadingTools()) {
+    <got-transmutation-loader label="Carregando tools…" />
+  }
+  @if (store.toolsError(); as message) {
+    <got-error-state [message]="message" (retry)="store.retryTools()" />
+  } @else if (store.hasNoTools()) {
+    <p class="muted">Este upstream não expõe tools.</p>
+  } @else {
+    <got-tool-list [tools]="store.tools()" />
+  }
+}
