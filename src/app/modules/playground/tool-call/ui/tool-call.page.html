@@ -1,0 +1,58 @@
+<h1>Playground</h1>
+
+<p class="warning">
+  <mat-icon fontSet="material-symbols-outlined">warning</mat-icon>
+  As chamadas são reais: a tool executa no upstream (cria página no Notion, escreve arquivo etc.).
+</p>
+
+<got-tool-picker
+  [upstreams]="store.upstreams()"
+  [tools]="store.tools()"
+  [upstreamKey]="store.upstreamKey()"
+  [toolName]="store.toolName()"
+  [loadingUpstreams]="store.isLoadingUpstreams()"
+  [loadingTools]="store.isLoadingTools()"
+  (upstreamChange)="store.selectUpstream($event)"
+  (toolChange)="store.selectTool($event)"
+/>
+
+@if (store.upstreamsError(); as message) {
+  <got-error-state [message]="message" (retry)="store.retryUpstreams()" />
+}
+@if (store.toolsError(); as message) {
+  <got-error-state [message]="message" (retry)="store.retryTools()" />
+}
+
+@if (store.toolNotFound()) {
+  <p>
+    Tool não encontrada: <code>{{ store.toolName() }}</code
+    >.
+  </p>
+}
+
+@if (store.selectedTool(); as tool) {
+  <p class="description">{{ tool.description ?? 'Sem descrição.' }}</p>
+
+  <got-arguments-editor
+    [text]="store.argumentsText()"
+    [error]="store.argumentsError()"
+    (textChange)="store.argumentsText.set($event)"
+  />
+
+  <button mat-flat-button [disabled]="!store.canCall()" (click)="store.call()">
+    <mat-icon fontSet="material-symbols-outlined">auto_awesome</mat-icon>
+    Executar transmutação
+  </button>
+
+  <section class="result">
+    @if (store.isCalling()) {
+      <got-transmutation-loader label="Executando a tool no upstream…" />
+    }
+    @if (store.callError(); as error) {
+      <p class="error">{{ error }}</p>
+    }
+    @if (store.result(); as result) {
+      <got-call-result [result]="result" />
+    }
+  </section>
+}

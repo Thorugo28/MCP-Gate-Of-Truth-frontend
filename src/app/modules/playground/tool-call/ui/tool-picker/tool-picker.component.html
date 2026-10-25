@@ -1,0 +1,33 @@
+<mat-form-field class="upstream">
+  <mat-label>Upstream</mat-label>
+  <mat-select [value]="upstreamKey()" (selectionChange)="upstreamChange.emit($event.value)">
+    @if (upstreamKey(); as key) {
+      @if (upstreams().length === 0) {
+        <!-- A lista é lenta (ping); mantém a chave da URL visível enquanto carrega. -->
+        <mat-option [value]="key">{{ key }}</mat-option>
+      }
+    }
+    @for (upstream of upstreams(); track upstream.key) {
+      <mat-option [value]="upstream.key">{{ upstream.key }} ({{ upstream.status }})</mat-option>
+    }
+  </mat-select>
+  @if (loadingUpstreams()) {
+    <mat-hint>Consultando upstreams…</mat-hint>
+  }
+</mat-form-field>
+
+<mat-form-field class="tool">
+  <mat-label>Tool</mat-label>
+  <mat-select
+    [value]="toolName()"
+    [disabled]="!upstreamKey()"
+    (selectionChange)="toolChange.emit($event.value)"
+  >
+    @for (tool of tools(); track tool.name) {
+      <mat-option [value]="tool.name">{{ tool.name }}</mat-option>
+    }
+  </mat-select>
+  @if (loadingTools()) {
+    <mat-hint>Carregando tools…</mat-hint>
+  }
+</mat-form-field>

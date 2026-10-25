@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--got-space-4);
+}
+
+.upstream {
+  flex: 0 1 var(--got-field-min-width);
+}
+
+.tool {
+  flex: 1 1 var(--got-field-min-width);
+}

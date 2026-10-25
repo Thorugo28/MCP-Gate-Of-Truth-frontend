@@ -1,0 +1,24 @@
+.warning {
+  display: flex;
+  align-items: center;
+  gap: var(--got-space-2);
+  padding: var(--got-space-4);
+  margin-bottom: var(--got-space-6);
+  border: var(--got-border-line);
+  border-left: var(--got-space-1) solid var(--got-accent);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--got-surface);
+}
+
+.description {
+  white-space: pre-line;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.result {
+  margin-top: var(--got-space-6);
+}
+
+.error {
+  color: var(--got-danger);
+}
