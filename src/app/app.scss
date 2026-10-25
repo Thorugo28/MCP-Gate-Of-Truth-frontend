@@ -1,0 +1,69 @@
+@use '@angular/material' as mat;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.topbar {
+  gap: var(--got-space-2);
+  border-bottom: var(--got-border-line);
+}
+
+.logo {
+  color: var(--got-accent-text);
+}
+
+.brand {
+  font-family: var(--got-font-title);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.subtitle {
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.shell {
+  flex: 1;
+}
+
+.sidenav {
+  width: var(--got-sidenav-width);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--got-space-2);
+  padding: var(--got-space-4) var(--got-space-3);
+
+  @include mat.list-overrides(
+    (
+      list-item-one-line-container-height: var(--got-nav-item-height),
+      list-item-container-shape: var(--mat-sys-corner-full),
+      list-item-label-text-size: var(--mat-sys-body-medium-size),
+      list-item-leading-icon-size: var(--got-nav-icon-size),
+      list-item-leading-icon-start-space: var(--got-space-4),
+      list-item-leading-icon-end-space: var(--got-space-3),
+    )
+  );
+}
+
+.content {
+  max-width: var(--got-content-max-width);
+  margin: 0 auto;
+  padding: var(--got-space-8);
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: var(--got-space-4);
+  }
+}
