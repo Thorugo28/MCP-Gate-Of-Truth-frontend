@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "1348fd39-343a-4de2-9d9b-8523b3113c7e"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -30,6 +31,13 @@
               }
             ],
             "styles": [
+              "@fontsource/inter/400.css",
+              "@fontsource/inter/500.css",
+              "@fontsource/inter/600.css",
+              "@fontsource/cinzel/500.css",
+              "@fontsource/cinzel/600.css",
+              "@fontsource/jetbrains-mono/400.css",
+              "material-symbols/outlined.css",
               "src/styles.scss"
             ]
           },
