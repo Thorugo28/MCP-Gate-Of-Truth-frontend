@@ -1,0 +1,51 @@
+// Tokens do painel (CLAUDE-frontend.md, seção Visual). Componentes usam só `var(--got-*)` ou o tema do Material.
+
+@mixin base {
+  // Espaçamento: --got-space-n = n × 4px.
+  --got-space-1: 4px;
+  --got-space-2: 8px;
+  --got-space-3: 12px;
+  --got-space-4: 16px;
+  --got-space-6: 24px;
+  --got-space-8: 32px;
+  --got-space-12: 48px;
+
+  --got-font-sans: 'Inter', sans-serif;
+  --got-font-title: 'Cinzel', serif;
+  --got-font-mono: 'JetBrains Mono', monospace;
+
+  --got-border-line: 1px solid var(--got-border);
+  --got-content-max-width: 1200px;
+  --got-sidenav-width: 240px;
+  --got-nav-item-height: 44px;
+  --got-nav-icon-size: 20px;
+  --got-field-min-width: 240px;
+  --got-logo-size: 32px;
+  --got-loader-size: 48px;
+}
+
+/* "A Verdade" */
+@mixin light {
+  --got-bg: #f8f9fa;
+  --got-surface: #ffffff;
+  --got-text: #1a1a1a;
+  --got-border: #d0d3d6;
+  --got-accent: #d4af37;
+  --got-on-accent: #1a1a1a;
+  --got-accent-text: #7a5c0f;
+  --got-up: #1e7b34;
+  --got-danger: #b3261e;
+}
+
+/* "Alquimia sombria" */
+@mixin dark {
+  --got-bg: #0d0d0d;
+  --got-surface: #1a1a1a;
+  --got-text: #e6e6e6;
+  --got-border: #c0c0c0;
+  --got-accent: #38b6ff;
+  --got-on-accent: #0d0d0d;
+  --got-accent-text: #38b6ff;
+  --got-up: #4ade80;
+  --got-danger: #f87171;
+}

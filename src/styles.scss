@@ -1,1 +1,138 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'styles/tokens';
+@use 'styles/palettes/gold' as gold-palettes;
+@use 'styles/palettes/blue' as blue-palettes;
+
+// Ajustes do Material em cima das paletas geradas: superfícies, texto e bordas vêm dos tokens.
+// `primary` é o acento de texto (links, botões de texto); o preenchimento dourado/azul vai só no botão cheio.
+@mixin material-overrides($on-primary) {
+  @include mat.theme-overrides(
+    (
+      primary: var(--got-accent-text),
+      on-primary: $on-primary,
+      background: var(--got-bg),
+      surface: var(--got-surface),
+      on-surface: var(--got-text),
+      outline: var(--got-border),
+      outline-variant: var(--got-border),
+      error: var(--got-danger),
+    )
+  );
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--got-accent),
+      filled-label-text-color: var(--got-on-accent),
+    )
+  );
+  @include mat.sidenav-overrides(
+    (
+      container-background-color: var(--got-surface),
+      container-divider-color: var(--got-border),
+      content-background-color: var(--got-bg),
+    )
+  );
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--got-surface),
+      container-text-color: var(--got-text),
+    )
+  );
+}
+
+@mixin light-theme {
+  color-scheme: light;
+  @include tokens.light;
+  @include mat.theme(
+    (
+      color: (
+        primary: gold-palettes.$primary-palette,
+        tertiary: gold-palettes.$tertiary-palette,
+        theme-type: light,
+      ),
+    )
+  );
+  @include material-overrides(var(--got-surface));
+}
+
+@mixin dark-theme {
+  color-scheme: dark;
+  @include tokens.dark;
+  @include mat.theme(
+    (
+      color: (
+        primary: blue-palettes.$primary-palette,
+        tertiary: blue-palettes.$tertiary-palette,
+        theme-type: dark,
+      ),
+    )
+  );
+  @include material-overrides(var(--got-on-accent));
+}
+
+html {
+  @include tokens.base;
+  @include mat.theme(
+    (
+      typography: (
+        plain-family: (
+          'Inter',
+          sans-serif,
+        ),
+        brand-family: (
+          'Inter',
+          sans-serif,
+        ),
+      ),
+      density: 0,
+    )
+  );
+  @include light-theme;
+}
+
+// Segue o sistema, a menos que o botão da toolbar tenha forçado um modo (data-theme no <html>).
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme='light']) {
+    @include dark-theme;
+  }
+}
+
+html[data-theme='dark'] {
+  @include dark-theme;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: var(--mat-sys-body-medium);
+  font-family: var(--got-font-sans);
+  background: var(--got-bg);
+  color: var(--got-text);
+}
+
+// Cinzel só em títulos de página (e no logo, no shell).
+h1,
+h2 {
+  font-family: var(--got-font-title);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  margin: 0 0 var(--got-space-6);
+}
+
+h2 {
+  margin: var(--got-space-8) 0 var(--got-space-4);
+}
+
+a {
+  color: var(--got-accent-text);
+}
+
+code {
+  font-family: var(--got-font-mono);
+}
