@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+
+:host {
+  --got-status-color: var(--got-danger);
+
+  @include mat.chips-overrides(
+    (
+      outline-color: var(--got-status-color),
+      label-text-color: var(--got-status-color),
+      with-icon-icon-color: var(--got-status-color),
+    )
+  );
+}
+
+:host(.up) {
+  --got-status-color: var(--got-up);
+}

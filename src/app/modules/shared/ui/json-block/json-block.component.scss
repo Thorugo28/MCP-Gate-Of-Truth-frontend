@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+pre {
+  margin: 0;
+  padding: var(--got-space-4);
+  overflow-x: auto;
+  border: var(--got-border-line);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--got-bg);
+  font: var(--mat-sys-body-small);
+  font-family: var(--got-font-mono);
+  line-height: 1.6;
+}
