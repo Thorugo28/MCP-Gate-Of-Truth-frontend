@@ -24,6 +24,17 @@
       filled-label-text-color: var(--got-on-accent),
     )
   );
+  // Contorno com a borda do painel; destaca no hover (texto) e no foco (acento).
+  @include mat.form-field-overrides(
+    (
+      outlined-outline-color: var(--got-border),
+      outlined-hover-outline-color: var(--got-text),
+      outlined-focus-outline-color: var(--got-accent-text),
+      outlined-focus-label-text-color: var(--got-accent-text),
+      outlined-caret-color: var(--got-accent-text),
+      outlined-container-shape: var(--got-space-2),
+    )
+  );
   @include mat.sidenav-overrides(
     (
       container-background-color: var(--got-surface),
