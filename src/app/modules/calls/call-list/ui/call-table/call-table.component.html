@@ -1,0 +1,61 @@
+<table mat-table [dataSource]="rows()">
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef>Quando</th>
+    <td mat-cell *matCellDef="let row" class="time">
+      <time [attr.datetime]="row.at">{{ row.time }}</time>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="caller">
+    <th mat-header-cell *matHeaderCellDef>Chave</th>
+    <td mat-cell *matCellDef="let row" class="mono">
+      <button
+        type="button"
+        class="filter-link"
+        (click)="filterBy.emit({ caller: row.caller })"
+        [attr.aria-label]="'Filtrar pela chave ' + row.caller"
+      >
+        {{ row.caller }}
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="via">
+    <th mat-header-cell *matHeaderCellDef>Por</th>
+    <td mat-cell *matCellDef="let row">{{ row.viaLabel }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tool">
+    <th mat-header-cell *matHeaderCellDef>Tool</th>
+    <td mat-cell *matCellDef="let row" class="mono">
+      <button
+        type="button"
+        class="filter-link"
+        (click)="filterBy.emit({ tool: row.tool })"
+        [attr.aria-label]="'Filtrar pela tool ' + row.tool"
+      >
+        {{ row.tool }}
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="outcome">
+    <th mat-header-cell *matHeaderCellDef>Resultado</th>
+    <td mat-cell *matCellDef="let row">
+      <div class="outcome">
+        <got-outcome-badge [outcome]="row.outcome" />
+        @if (row.error) {
+          <span class="error">{{ row.error }}</span>
+        }
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef class="numeric">Duração</th>
+    <td mat-cell *matCellDef="let row" class="numeric">{{ row.duration }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+</table>

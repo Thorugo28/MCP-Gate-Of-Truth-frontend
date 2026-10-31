@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  border: var(--got-border-line);
+  border-radius: var(--mat-sys-corner-medium);
+  overflow: auto;
+}
+
+.time,
+.numeric {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: var(--got-font-mono);
+}
+
+.filter-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--got-accent-text);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.outcome {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--got-space-2);
+}
+
+.error {
+  color: var(--got-danger);
+}
+
+.numeric {
+  text-align: right;
+}

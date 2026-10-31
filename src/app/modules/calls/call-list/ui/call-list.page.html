@@ -1,0 +1,38 @@
+<header class="header">
+  <div>
+    <h1>Registros do alquimista</h1>
+    <p class="muted">
+      Últimas {{ limit }} chamadas de tool, pelo <code>/mcp</code> e pelo playground, mais recentes
+      primeiro.
+    </p>
+  </div>
+  <button mat-stroked-button (click)="store.refresh()" [disabled]="store.isLoading()">
+    <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+    Atualizar
+  </button>
+</header>
+
+<got-call-filters
+  [filter]="store.filter()"
+  [filtered]="store.isFiltered()"
+  (filterChange)="store.updateFilter($event)"
+  (clear)="store.clearFilter()"
+/>
+
+@if (store.isFirstLoad()) {
+  <got-transmutation-loader label="Lendo os registros…" />
+}
+
+@if (store.errorMessage(); as message) {
+  <got-error-state [message]="message" (retry)="store.refresh()" />
+} @else if (store.isEmpty()) {
+  <p class="muted">
+    @if (store.isFiltered()) {
+      Nenhuma chamada com esses filtros.
+    } @else {
+      Nenhuma chamada registrada ainda.
+    }
+  </p>
+} @else if (store.rows().length > 0) {
+  <got-call-table [rows]="store.rows()" (filterBy)="store.updateFilter($event)" />
+}

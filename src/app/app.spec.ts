@@ -24,6 +24,7 @@ describe('App', () => {
     expect(links).toEqual([
       expect.stringContaining('Upstreams'),
       expect.stringContaining('Playground'),
+      expect.stringContaining('Chamadas'),
     ]);
   });
 });

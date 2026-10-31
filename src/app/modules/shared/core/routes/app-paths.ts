@@ -2,6 +2,7 @@
 export const AppPaths = {
   upstreams: 'upstreams',
   playground: 'playground',
+  calls: 'chamadas',
   accessKey: 'chave',
 } as const;
 

@@ -40,5 +40,6 @@ export class App {
   protected readonly navItems: NavItem[] = [
     { path: AppPaths.upstreams, label: 'Upstreams', icon: 'hub' },
     { path: AppPaths.playground, label: 'Playground', icon: 'play_circle' },
+    { path: AppPaths.calls, label: 'Chamadas', icon: 'history' },
   ];
 }
