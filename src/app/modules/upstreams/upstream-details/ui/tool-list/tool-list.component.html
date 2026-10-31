@@ -1,20 +1,35 @@
 <mat-accordion multi>
   @for (tool of tools(); track tool.name) {
-    <mat-expansion-panel>
+    <mat-expansion-panel [class.off]="!tool.enabled">
       <mat-expansion-panel-header>
         <mat-panel-title class="name">{{ tool.name }}</mat-panel-title>
-        <mat-panel-description class="original">{{ tool.originalName }}</mat-panel-description>
+        <mat-panel-description>
+          <span class="original">{{ tool.originalName }}</span>
+          <!-- Clique e teclado no toggle não abrem/fecham o painel. -->
+          <mat-slide-toggle
+            class="toggle"
+            [checked]="tool.checked"
+            [disabled]="tool.toggling"
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()"
+            (change)="enabledChange.emit({ tool, enabled: $event.checked })"
+          >
+            Ligada
+          </mat-slide-toggle>
+        </mat-panel-description>
       </mat-expansion-panel-header>
 
       <p class="description">{{ tool.description ?? 'Sem descrição.' }}</p>
       <h3>inputSchema</h3>
       <got-json-block [value]="tool.inputSchema" />
 
-      <mat-action-row>
-        <a mat-button [routerLink]="playgroundLink" [queryParams]="{ tool: tool.name }">
-          Abrir no playground
-        </a>
-      </mat-action-row>
+      @if (tool.enabled) {
+        <mat-action-row>
+          <a mat-button [routerLink]="playgroundLink" [queryParams]="{ tool: tool.name }">
+            Abrir no playground
+          </a>
+        </mat-action-row>
+      }
     </mat-expansion-panel>
   }
 </mat-accordion>

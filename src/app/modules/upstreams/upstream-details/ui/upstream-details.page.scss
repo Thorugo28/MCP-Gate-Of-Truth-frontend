@@ -1,3 +1,21 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--got-space-4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--got-space-2);
+}
+
+.remove {
+  --mat-button-outlined-label-text-color: var(--got-danger);
+}
+
 .back {
   margin-bottom: var(--got-space-4);
 }

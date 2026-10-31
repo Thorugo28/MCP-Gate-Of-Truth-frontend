@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { upstreamDetailsLink } from '../../../shared/core/routes/app-paths';
 import { ErrorStateComponent } from '../../../shared/ui/error-state/error-state.component';
 import { TransmutationLoaderComponent } from '../../../shared/ui/transmutation-loader/transmutation-loader.component';
 import { ToolCallStore } from '../core/tool-call.store';
@@ -14,6 +16,7 @@ import { ToolPickerComponent } from './tool-picker/tool-picker.component';
   imports: [
     MatButtonModule,
     MatIconModule,
+    RouterLink,
     ArgumentsEditorComponent,
     ErrorStateComponent,
     TransmutationLoaderComponent,
@@ -26,4 +29,7 @@ import { ToolPickerComponent } from './tool-picker/tool-picker.component';
 })
 export class ToolCallPage {
   protected readonly store = inject(ToolCallStore);
+  protected readonly upstreamLink = computed(() =>
+    upstreamDetailsLink(this.store.upstreamKey() ?? ''),
+  );
 }

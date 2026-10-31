@@ -3,6 +3,27 @@
   font-family: var(--got-font-mono);
 }
 
+mat-panel-description {
+  align-items: center;
+  gap: var(--got-space-3);
+}
+
+.original {
+  flex: 1;
+}
+
+.toggle {
+  flex: none;
+}
+
+// Tool desligada: esmaecida, mas continua abrindo (descrição e inputSchema).
+.off .name,
+.off .original,
+.off .description,
+.off got-json-block {
+  opacity: var(--got-disabled-opacity);
+}
+
 .description {
   white-space: pre-line;
 }

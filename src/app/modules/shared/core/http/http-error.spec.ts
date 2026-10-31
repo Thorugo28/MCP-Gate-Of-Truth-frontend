@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError, errorMessageOf, httpStatusOf, toApiError } from './http-error';
+import { ApiError, errorMessageOf, httpStatusOf, serverErrorOf, toApiError } from './http-error';
 
 describe('http-error', () => {
   const notFound = new HttpErrorResponse({ status: 404 });
@@ -39,6 +39,21 @@ describe('http-error', () => {
       expect(errorMessageOf(new ApiError(0, 'fora do ar'))).toBe('fora do ar');
       expect(errorMessageOf(new Error('x'))).toContain('inesperado');
       expect(errorMessageOf(undefined)).toBeNull();
+    });
+  });
+
+  describe('serverErrorOf', () => {
+    it('reads the error field of the body, also through an ApiError', () => {
+      const response = new HttpErrorResponse({ status: 400, error: { error: 'Falta o command' } });
+
+      expect(serverErrorOf(response)).toBe('Falta o command');
+      expect(serverErrorOf(toApiError(response, 'http://gw'))).toBe('Falta o command');
+    });
+
+    it('is null without a usable body', () => {
+      expect(serverErrorOf(new HttpErrorResponse({ status: 409 }))).toBeNull();
+      expect(serverErrorOf(new HttpErrorResponse({ status: 400, error: 'texto' }))).toBeNull();
+      expect(serverErrorOf(new ApiError(400, 'x'))).toBeNull();
     });
   });
 });

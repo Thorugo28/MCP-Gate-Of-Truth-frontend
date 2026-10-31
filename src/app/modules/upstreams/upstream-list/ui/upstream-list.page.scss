@@ -10,6 +10,12 @@
   }
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--got-space-2);
+}
+
 .muted {
   color: var(--mat-sys-on-surface-variant);
 }

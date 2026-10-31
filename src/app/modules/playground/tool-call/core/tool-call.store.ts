@@ -52,9 +52,11 @@ export class ToolCallStore {
   readonly isLoadingUpstreams = this.upstreamsResource.isLoading;
   readonly upstreamsError = computed(() => errorMessageOf(this.upstreamsResource.error()));
 
-  readonly tools = computed<ToolDto[]>(() =>
+  private readonly allTools = computed<ToolDto[]>(() =>
     this.toolsResource.hasValue() ? this.toolsResource.value() : [],
   );
+  /** Só as ligadas: as desligadas estão fora do gateway e a chamada daria 404. */
+  readonly tools = computed(() => this.allTools().filter((t) => t.enabled));
   readonly isLoadingTools = this.toolsResource.isLoading;
   /** Erro das tools que não é 404 (este vira `toolNotFound`). */
   readonly toolsError = computed(() =>
@@ -66,6 +68,14 @@ export class ToolCallStore {
   readonly selectedTool = computed(
     () => this.tools().find((t) => t.name === this.toolName()) ?? null,
   );
+  /** Upstream selecionado está DOWN: a lista de tools dele vem vazia até reconectar. */
+  readonly selectedUpstreamDown = computed(
+    () => this.upstreams().find((u) => u.key === this.upstreamKey())?.status === 'DOWN',
+  );
+  /** Tool pedida (pela URL) que existe mas está desligada: aviso com link para religar, sem chamar. */
+  readonly selectedToolDisabled = computed(
+    () => this.allTools().find((t) => t.name === this.toolName())?.enabled === false,
+  );
   /** Tool pedida (pela URL) que não existe: upstream desconhecido (404) ou nome fora da lista. */
   readonly toolNotFound = computed(() => {
     if (!this.toolName()) {
@@ -74,7 +84,9 @@ export class ToolCallStore {
     if (httpStatusOf(this.toolsResource.error()) === 404) {
       return true;
     }
-    return this.toolsResource.hasValue() && this.selectedTool() === null;
+    return (
+      this.toolsResource.hasValue() && this.selectedTool() === null && !this.selectedToolDisabled()
+    );
   });
 
   /** Texto do editor; volta para o esqueleto do inputSchema sempre que a tool muda. */
@@ -135,10 +147,15 @@ export class ToolCallStore {
         error: (error: unknown) => {
           this.callError.set(
             httpStatusOf(error) === 404
-              ? `Tool não encontrada: ${tool.name}.`
+              ? `Tool não encontrada, desligada ou com o upstream ${upstreamKeyOf(tool.name)} fora do ar.`
               : `A chamada não chegou à tool. ${errorMessageOf(error)}`,
           );
           this.calling.set(false);
+          // A tool estava na lista e a rota sumiu (upstream caiu ou tool desligada): atualiza o seletor.
+          if (httpStatusOf(error) === 404) {
+            this.upstreamsResource.reload();
+            this.toolsResource.reload();
+          }
         },
       });
   }

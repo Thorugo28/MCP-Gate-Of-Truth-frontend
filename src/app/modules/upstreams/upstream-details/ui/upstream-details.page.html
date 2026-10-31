@@ -3,9 +3,38 @@
   Upstreams
 </a>
 
-<h1>
-  Upstream <span class="key">{{ store.key() }}</span>
-</h1>
+<header class="title">
+  <h1>
+    Upstream <span class="key">{{ store.key() }}</span>
+  </h1>
+  <div class="actions">
+    @switch (store.authorization()) {
+      @case ('NEEDED') {
+        <button mat-flat-button (click)="openAuthorize()">
+          <mat-icon fontSet="material-symbols-outlined">login</mat-icon>
+          Autorizar
+        </button>
+      }
+      @case ('OK') {
+        <button mat-button (click)="openAuthorize()">
+          <mat-icon fontSet="material-symbols-outlined">login</mat-icon>
+          Autorizar de novo
+        </button>
+      }
+    }
+    @if (store.canRemove()) {
+      <button
+        mat-stroked-button
+        class="remove"
+        [disabled]="store.removing()"
+        (click)="confirmRemove()"
+      >
+        <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+        {{ store.removing() ? 'Removendo…' : 'Remover' }}
+      </button>
+    }
+  </div>
+</header>
 
 @if (store.notFound()) {
   <p>
@@ -21,15 +50,25 @@
     <got-error-state [message]="message" (retry)="store.retryHeader()" />
   }
 
+  @if (store.header()) {
+    <h2>Definição</h2>
+    <got-upstream-definition [definition]="store.definition()" />
+  }
+
   <h2>Tools</h2>
   @if (store.isLoadingTools()) {
     <got-transmutation-loader label="Carregando tools…" />
   }
   @if (store.toolsError(); as message) {
     <got-error-state [message]="message" (retry)="store.retryTools()" />
+  } @else if (store.isDown()) {
+    <p class="muted">Upstream fora do ar; as tools voltam quando ele reconectar.</p>
   } @else if (store.hasNoTools()) {
     <p class="muted">Este upstream não expõe tools.</p>
   } @else {
-    <got-tool-list [tools]="store.tools()" />
+    <got-tool-list
+      [tools]="store.tools()"
+      (enabledChange)="store.setEnabled($event.tool, $event.enabled)"
+    />
   }
 }

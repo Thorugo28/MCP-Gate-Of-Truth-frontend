@@ -23,7 +23,21 @@
   <got-error-state [message]="message" (retry)="store.retryTools()" />
 }
 
-@if (store.toolNotFound()) {
+@if (store.selectedUpstreamDown()) {
+  <p>
+    Upstream <code>{{ store.upstreamKey() }}</code> fora do ar; as tools voltam quando ele
+    reconectar.
+  </p>
+} @else if (store.selectedToolDisabled()) {
+  <p class="warning">
+    <mat-icon fontSet="material-symbols-outlined">toggle_off</mat-icon>
+    <span>
+      Tool desligada no gateway: <code>{{ store.toolName() }}</code
+      >.
+      <a [routerLink]="upstreamLink()">Religar no detalhe do upstream</a>
+    </span>
+  </p>
+} @else if (store.toolNotFound()) {
   <p>
     Tool não encontrada: <code>{{ store.toolName() }}</code
     >.

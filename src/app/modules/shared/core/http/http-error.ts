@@ -54,6 +54,16 @@ export function errorMessageOf(error: unknown): string | null {
     : 'Erro inesperado. Veja o console do navegador.';
 }
 
+/** O `error` do corpo `{"error": "..."}` que o backend manda em alguns 400; `null` se não vier. */
+export function serverErrorOf(error: unknown): string | null {
+  const response = error instanceof ApiError ? error.cause : error;
+  if (!(response instanceof HttpErrorResponse)) {
+    return null;
+  }
+  const body = response.error as { error?: unknown } | null;
+  return typeof body?.error === 'string' && body.error !== '' ? body.error : null;
+}
+
 function isHttpError(error: unknown): error is ApiError | HttpErrorResponse {
   return error instanceof ApiError || error instanceof HttpErrorResponse;
 }

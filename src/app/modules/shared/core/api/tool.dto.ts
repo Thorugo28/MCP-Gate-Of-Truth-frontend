@@ -9,4 +9,6 @@ export interface ToolDto {
   originalName: string;
   description: string | null;
   inputSchema: JsonSchema;
+  /** `false` = desligada pelo painel: fora do /mcp e do playground. */
+  enabled: boolean;
 }

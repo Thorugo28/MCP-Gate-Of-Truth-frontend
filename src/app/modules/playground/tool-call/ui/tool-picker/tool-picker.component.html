@@ -3,7 +3,7 @@
   <mat-select [value]="upstreamKey()" (selectionChange)="upstreamChange.emit($event.value)">
     @if (upstreamKey(); as key) {
       @if (upstreams().length === 0) {
-        <!-- A lista é lenta (ping); mantém a chave da URL visível enquanto carrega. -->
+        <!-- Mantém a chave da URL visível enquanto a lista carrega. -->
         <mat-option [value]="key">{{ key }}</mat-option>
       }
     }

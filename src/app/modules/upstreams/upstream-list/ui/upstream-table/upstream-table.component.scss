@@ -15,6 +15,23 @@
   text-decoration: none;
 }
 
+.status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--got-space-2);
+}
+
+.retry {
+  color: var(--mat-sys-on-surface-variant);
+  font-variant-numeric: tabular-nums;
+}
+
+.needed {
+  --mat-chip-label-text-color: var(--got-danger);
+  --mat-chip-outline-color: var(--got-danger);
+}
+
 .numeric {
   text-align: right;
 }

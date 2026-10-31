@@ -1,15 +1,19 @@
 <header class="header">
   <h1>Upstreams</h1>
-  <button mat-stroked-button (click)="store.refresh()" [disabled]="store.isLoading()">
-    <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
-    Atualizar
-  </button>
+  <div class="actions">
+    <button mat-stroked-button (click)="store.refresh()" [disabled]="store.isLoading()">
+      <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+      Atualizar
+    </button>
+    <button mat-flat-button (click)="openCreate()">
+      <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+      Novo upstream
+    </button>
+  </div>
 </header>
 
-@if (store.isLoading()) {
-  <got-transmutation-loader
-    label="O gateway faz ping em cada upstream; pode levar até um minuto."
-  />
+@if (store.isFirstLoad()) {
+  <got-transmutation-loader label="Consultando o status dos upstreams…" />
 }
 
 @if (store.errorMessage(); as message) {
@@ -17,5 +21,5 @@
 } @else if (store.isEmpty()) {
   <p class="muted">Nenhum upstream configurado no gateway.</p>
 } @else if (store.rows().length > 0) {
-  <got-upstream-table [rows]="store.rows()" />
+  <got-upstream-table [rows]="store.rows()" (authorize)="openAuthorize($event)" />
 }
