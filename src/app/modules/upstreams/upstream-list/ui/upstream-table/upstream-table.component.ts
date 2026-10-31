@@ -27,6 +27,6 @@ export class UpstreamTableComponent {
   /** Chave do upstream que espera login. */
   readonly authorize = output<string>();
 
-  protected readonly columns = ['key', 'origin', 'status', 'server', 'toolCount'];
+  protected readonly columns = ['key', 'origin', 'status', 'server', 'toolCount', 'actions'];
   protected readonly detailsLink = upstreamDetailsLink;
 }

@@ -18,8 +18,8 @@
 .status {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: var(--got-space-2);
+  white-space: nowrap;
 }
 
 .retry {
@@ -30,8 +30,16 @@
 .needed {
   --mat-chip-label-text-color: var(--got-danger);
   --mat-chip-outline-color: var(--got-danger);
+  --mat-chip-with-icon-icon-color: var(--got-danger);
 }
 
 .numeric {
+  text-align: right;
+}
+
+// Só ocupa espaço quando algum upstream pede login.
+.actions {
+  width: 1%;
+  white-space: nowrap;
   text-align: right;
 }
