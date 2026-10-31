@@ -1,0 +1,90 @@
+@if (created(); as key) {
+  <h2 mat-dialog-title>Chave {{ key.name }} criada</h2>
+  <mat-dialog-content class="created">
+    <p class="warning">
+      <mat-icon fontSet="material-symbols-outlined">warning</mat-icon>
+      Este valor não aparece de novo. Copie agora.
+    </p>
+
+    <h3>Valor</h3>
+    <div class="copy-row">
+      <code class="secret">{{ key.value }}</code>
+      <button
+        mat-stroked-button
+        [cdkCopyToClipboard]="key.value"
+        (cdkCopyToClipboardCopied)="copied.set($event ? 'value' : null)"
+      >
+        <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
+        {{ copied() === 'value' ? 'Copiado' : 'Copiar' }}
+      </button>
+    </div>
+
+    <h3>Comando para o Claude Code</h3>
+    <div class="copy-row">
+      <code class="secret">{{ key.command }}</code>
+      <button
+        mat-stroked-button
+        [cdkCopyToClipboard]="key.command"
+        (cdkCopyToClipboardCopied)="copied.set($event ? 'command' : null)"
+      >
+        <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
+        {{ copied() === 'command' ? 'Copiado' : 'Copiar' }}
+      </button>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Copiei, fechar</button>
+  </mat-dialog-actions>
+} @else {
+  <h2 mat-dialog-title>Nova chave</h2>
+  <mat-dialog-content>
+    <form id="key-create-form" class="form" (submit)="$event.preventDefault(); submit()">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          class="mono"
+          autocomplete="off"
+          spellcheck="false"
+          [value]="name()"
+          (input)="setName($any($event.target).value)"
+          (blur)="touched.set(true)"
+          placeholder="teste"
+        />
+        @if (nameError(); as error) {
+          <mat-hint class="error">{{ error }}</mat-hint>
+        } @else {
+          <mat-hint>Letras, números, "_" e "-". Não dá para trocar depois.</mat-hint>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Upstreams</mat-label>
+        <mat-select multiple [value]="upstreams()" (selectionChange)="setUpstreams($event.value)">
+          <mat-option [value]="all">todos (*)</mat-option>
+          @for (upstream of data.upstreams(); track upstream) {
+            <mat-option [value]="upstream" class="mono">{{ upstream }}</mat-option>
+          }
+        </mat-select>
+        @if (upstreams().length === 0) {
+          <mat-hint>Sem upstream, a chave não vê nenhuma tool.</mat-hint>
+        }
+      </mat-form-field>
+
+      <mat-checkbox [checked]="admin()" (change)="admin.set($event.checked)">
+        Admin: pode editar o gateway pelo painel
+      </mat-checkbox>
+
+      @if (serverError().form; as error) {
+        <p class="error">{{ error }}</p>
+      }
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close [disabled]="submitting()">Cancelar</button>
+    <button mat-flat-button type="submit" form="key-create-form" [disabled]="submitting()">
+      <mat-icon fontSet="material-symbols-outlined">vpn_key</mat-icon>
+      {{ submitting() ? 'Criando…' : 'Criar chave' }}
+    </button>
+  </mat-dialog-actions>
+}

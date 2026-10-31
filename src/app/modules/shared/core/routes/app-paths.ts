@@ -3,6 +3,8 @@ export const AppPaths = {
   upstreams: 'upstreams',
   playground: 'playground',
   calls: 'chamadas',
+  /** Gestão das chaves; não confundir com `accessKey` (a tela de entrar). */
+  keys: 'chaves',
   accessKey: 'chave',
 } as const;
 

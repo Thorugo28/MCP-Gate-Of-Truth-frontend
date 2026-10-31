@@ -25,6 +25,7 @@ describe('App', () => {
       expect.stringContaining('Upstreams'),
       expect.stringContaining('Playground'),
       expect.stringContaining('Chamadas'),
+      expect.stringContaining('Chaves'),
     ]);
   });
 });

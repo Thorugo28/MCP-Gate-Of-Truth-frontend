@@ -1,0 +1,78 @@
+<table mat-table [dataSource]="rows()">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let row" class="mono">{{ row.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="origin">
+    <th mat-header-cell *matHeaderCellDef>Origem</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip>{{ row.originLabel }}</mat-chip>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="upstreams">
+    <th mat-header-cell *matHeaderCellDef>Upstreams</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-chip-set>
+        @for (upstream of row.upstreams; track upstream) {
+          <mat-chip class="mono">{{ upstream }}</mat-chip>
+        }
+      </mat-chip-set>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="admin">
+    <th mat-header-cell *matHeaderCellDef>Admin</th>
+    <td mat-cell *matCellDef="let row">
+      @if (row.admin) {
+        <mat-icon
+          fontSet="material-symbols-outlined"
+          aria-label="Admin: pode editar o gateway pelo painel"
+          matTooltip="Pode editar o gateway pelo painel"
+          >admin_panel_settings</mat-icon
+        >
+      } @else {
+        <span aria-label="Sem admin">—</span>
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="created">
+    <th mat-header-cell *matHeaderCellDef>Criada</th>
+    <td mat-cell *matCellDef="let row" class="date">{{ row.created ?? '—' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Situação</th>
+    <td mat-cell *matCellDef="let row" class="date">{{ row.status }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef><span class="cdk-visually-hidden">Ações</span></th>
+    <td mat-cell *matCellDef="let row" class="actions">
+      @if (row.canRevoke) {
+        <button
+          mat-button
+          class="revoke"
+          [disabled]="revoking() === row.name"
+          (click)="revoke.emit(row)"
+        >
+          <mat-icon fontSet="material-symbols-outlined">key_off</mat-icon>
+          {{ revoking() === row.name ? 'Revogando…' : 'Revogar' }}
+        </button>
+      } @else if (row.origin === 'file') {
+        <mat-icon
+          fontSet="material-symbols-outlined"
+          class="locked"
+          matTooltip="Definida no application.yml"
+          aria-label="Definida no application.yml"
+          >lock</mat-icon
+        >
+      }
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns" [class.revoked]="row.revoked"></tr>
+</table>

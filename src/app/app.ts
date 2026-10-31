@@ -41,5 +41,6 @@ export class App {
     { path: AppPaths.upstreams, label: 'Upstreams', icon: 'hub' },
     { path: AppPaths.playground, label: 'Playground', icon: 'play_circle' },
     { path: AppPaths.calls, label: 'Chamadas', icon: 'history' },
+    { path: AppPaths.keys, label: 'Chaves', icon: 'vpn_key' },
   ];
 }

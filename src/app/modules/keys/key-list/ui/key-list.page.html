@@ -1,0 +1,43 @@
+<header class="header">
+  <div>
+    <h1>Chaves de acesso</h1>
+    <p class="muted">
+      Quem pode usar o gateway. As do <code>application.yml</code> só mudam lá; as criadas aqui
+      podem ser revogadas.
+    </p>
+  </div>
+  <div class="actions">
+    <button mat-stroked-button (click)="store.refresh()" [disabled]="store.isLoading()">
+      <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+      Atualizar
+    </button>
+    <button mat-flat-button (click)="openCreate()">
+      <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+      Nova chave
+    </button>
+  </div>
+</header>
+
+<mat-slide-toggle
+  class="show-revoked"
+  [checked]="store.showRevoked()"
+  (change)="store.showRevoked.set($event.checked)"
+>
+  Mostrar revogadas ({{ store.revokedCount() }})
+</mat-slide-toggle>
+
+@if (store.isFirstLoad()) {
+  <got-transmutation-loader label="Lendo as chaves…" />
+}
+
+@if (store.errorMessage(); as message) {
+  <got-error-state [message]="message" (retry)="store.refresh()" />
+} @else if (store.isEmpty()) {
+  <p class="muted">Nenhuma chave ativa.</p>
+} @else if (store.rows().length > 0) {
+  <got-key-table
+    [rows]="store.rows()"
+    [revoking]="store.revoking()"
+    (revoke)="confirmRevoke($event)"
+  />
+}

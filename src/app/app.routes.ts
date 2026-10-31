@@ -22,6 +22,11 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/calls/calls.routes').then((m) => m.CALLS_ROUTES),
   },
   {
+    path: AppPaths.keys,
+    canActivate: [accessKeyGuard],
+    loadChildren: () => import('./modules/keys/keys.routes').then((m) => m.KEYS_ROUTES),
+  },
+  {
     path: AppPaths.accessKey,
     title: 'Chave de acesso · Gate of Truth',
     loadComponent: () =>
