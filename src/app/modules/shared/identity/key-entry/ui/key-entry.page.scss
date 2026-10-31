@@ -1,0 +1,35 @@
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  gap: var(--got-space-2);
+  padding: var(--got-space-4);
+  margin-bottom: var(--got-space-6);
+  border: var(--got-border-line);
+  border-left: var(--got-space-1) solid var(--got-danger);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--got-surface);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--got-space-4);
+  max-width: var(--got-key-form-width);
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  input {
+    font-family: var(--got-font-mono);
+  }
+}
+
+.error {
+  color: var(--got-danger);
+}

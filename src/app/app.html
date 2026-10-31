@@ -12,6 +12,12 @@
       themeMode.mode() === 'dark' ? 'light_mode' : 'dark_mode'
     }}</mat-icon>
   </button>
+  @if (accessKey.hasKey()) {
+    <button mat-button (click)="accessKey.signOut()">
+      <mat-icon fontSet="material-symbols-outlined">logout</mat-icon>
+      Sair
+    </button>
+  }
 </mat-toolbar>
 
 <mat-sidenav-container class="shell">

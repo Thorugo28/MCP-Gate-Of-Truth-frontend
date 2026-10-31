@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppPaths } from './modules/shared/core/routes/app-paths';
+import { AccessKeyService } from './modules/shared/identity/access-key.service';
 import { ThemeModeService } from './modules/shared/services/theme-mode.service';
 import { LogoComponent } from './modules/shared/ui/logo/logo.component';
 
@@ -34,6 +35,7 @@ interface NavItem {
 })
 export class App {
   protected readonly themeMode = inject(ThemeModeService);
+  protected readonly accessKey = inject(AccessKeyService);
 
   protected readonly navItems: NavItem[] = [
     { path: AppPaths.upstreams, label: 'Upstreams', icon: 'hub' },

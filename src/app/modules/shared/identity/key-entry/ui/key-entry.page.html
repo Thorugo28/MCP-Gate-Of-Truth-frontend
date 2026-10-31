@@ -1,0 +1,39 @@
+<h1>Chave de acesso</h1>
+
+<p class="muted">
+  Cole a chave do painel (a de <code>GATE_KEY_PANEL</code> no gateway). Ela é testada antes de ser
+  guardada.
+</p>
+
+@if (store.notice(); as notice) {
+  <p class="notice">
+    <mat-icon fontSet="material-symbols-outlined">key_off</mat-icon>
+    {{ notice }}
+  </p>
+}
+
+<form class="form" (submit)="$event.preventDefault(); store.submit()">
+  <mat-form-field>
+    <mat-label>Chave</mat-label>
+    <input
+      matInput
+      type="password"
+      autocomplete="off"
+      spellcheck="false"
+      [value]="store.key()"
+      (input)="store.setKey($any($event.target).value)"
+    />
+    @if (store.errorMessage(); as error) {
+      <mat-hint class="error">{{ error }}</mat-hint>
+    }
+  </mat-form-field>
+
+  <mat-checkbox [checked]="store.remember()" (change)="store.remember.set($event.checked)">
+    Lembrar neste navegador
+  </mat-checkbox>
+
+  <button mat-flat-button type="submit" [disabled]="!store.canSubmit()">
+    <mat-icon fontSet="material-symbols-outlined">key</mat-icon>
+    {{ store.isVerifying() ? 'Testando…' : 'Entrar' }}
+  </button>
+</form>

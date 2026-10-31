@@ -2,6 +2,7 @@
 export const AppPaths = {
   upstreams: 'upstreams',
   playground: 'playground',
+  accessKey: 'chave',
 } as const;
 
 /** Comandos de `routerLink` para o detalhe de um upstream. */
@@ -11,3 +12,6 @@ export function upstreamDetailsLink(key: string): string[] {
 
 /** Comandos de `routerLink` para o playground; a tool vai em `queryParams: { tool }`. */
 export const playgroundLink = ['/', AppPaths.playground];
+
+/** Comandos de `routerLink` para a tela de chave de acesso. */
+export const accessKeyLink = ['/', AppPaths.accessKey];
