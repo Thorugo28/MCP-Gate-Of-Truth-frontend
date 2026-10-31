@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Mesma silhueta do got-logo (shared/ui/logo). Cor do acento de texto de cada modo. -->
+  <style>
+    path { fill: #7a5c0f; }
+    @media (prefers-color-scheme: dark) { path { fill: #38b6ff; } }
+  </style>
+  <path
+    fill-rule="evenodd"
+    d="M3 4h26v3h-2v21h2v2H3v-2h2V7H3zm5 3v21h7.25V7zm8.75 0v21H24V7zM10 10h3.5v15H10zm8.5 0H22v15h-3.5z"
+  />
+</svg>
